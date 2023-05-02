@@ -50,8 +50,10 @@ const addUsers = async (req, res) => {
                 
             }
         })
+       // return res.status(200).json({addUsers})
     } catch (err) {
         console.log(err)
+        //return res.status(500).json({err: 'add user'})
     }
 }
 
