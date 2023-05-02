@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgresql://postgres:pilot@localhost:5432/prismacommerce"//env("DATABASE_URL")
 }
 
 model User {
@@ -34,6 +34,7 @@ model Product {
   description String
   price  Int
   images String[]
+  category String
 }
 
 model Order {

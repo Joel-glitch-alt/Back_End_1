@@ -11,7 +11,7 @@ const getProducts = async (req,res)=> {
         });
         if(products.length > 0) {
             res.status(200).json({
-                message: 'Found Product',
+                message: 'Found Product',   
                 products
             })
         } else {

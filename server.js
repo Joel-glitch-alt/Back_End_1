@@ -19,7 +19,6 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 app.use(cors());
-//app.use(bcrypt())
 
 // app.use('*/:route', (req, res, next) => {
 //     console.log(req.params.route)
@@ -47,6 +46,7 @@ app.use((error,req,res,next)=>{
     });
 });
 //port route....
-app.listen(4000,()=>{
-    console.log("running....")
+const port = process.env.PORT || 4000
+app.listen(port,()=>{
+    console.log("running on port "+port +" ....")
 });
