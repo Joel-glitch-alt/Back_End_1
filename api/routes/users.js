@@ -8,7 +8,8 @@ const UsersController = require('../controlers/users');
 //Handling income messages
 router.get('/', UsersController.getUsers);
 router.get('/:id', UsersController.getUserById);
-router.post('/',upload.single('productImage'), UsersController.addUsers);
+router.post('/signUp',upload.single('productImage'), UsersController.addUsers);
+router.post('/signin', UsersController.userLogin)
 router.delete('/:id', UsersController.deleteUserById);
 
 module.exports = router;

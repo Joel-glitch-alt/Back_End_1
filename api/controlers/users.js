@@ -2,6 +2,7 @@
 const prisma = require('../../prisma-connect');
 
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
 
 const getUsers = async (req,res)=> {
     console.log('heree');
@@ -57,6 +58,55 @@ const addUsers = async (req, res) => {
     }
 }
 
+const userLogin =  async (req, res, next) => {
+    console.log(req.body)
+    const { email, password } = req.body
+    const user = await prisma.user.findUnique({
+        where: {
+            email
+        }
+    })
+    console.log(user)
+    if(user.length < 1) {
+        res.status(401).json({
+            message:"Auth failed!"
+        })
+    } else {
+        bcrypt.compare(password, user.password, (err, result) => {
+            if(err) {
+                return res.status(401).json({
+                    message:"Auth failed"
+                })
+            }
+            if(result) {
+                const token = jwt.sign(
+                    {
+                        email,
+                        password
+                    },
+                    process.env.JWT_KEY,
+                    {
+                        expiresIn:"1hr"
+                    }
+                )
+                return res.status(200).json({
+                    message:"Authentication successful!",
+                    token,
+                    user
+                })
+            }
+            res.status(401).json({
+                message:"Auth failedddd"
+            })
+        })
+    }
+}
+
+
+
+
+
+
 
 const deleteUserById = async (req, res) => {
     const id = (req.params.id)
@@ -95,6 +145,7 @@ const getUserById = async (req, res,next) => {
 module.exports = {
     getUsers,
     addUsers,
+    userLogin,
     deleteUserById,
     getUserById
 }
