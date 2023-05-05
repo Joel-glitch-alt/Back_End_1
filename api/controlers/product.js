@@ -31,7 +31,7 @@ const getProducts = async (req,res)=> {
 const addProducts = async (req, res) => {
     const { title, description, price, images, userId, category} = req.body
     try {
-        await prisma.product.create({
+        const product = await prisma.product.create({
             data: {
                 title,
                 price: parseInt(price) ,
@@ -41,12 +41,13 @@ const addProducts = async (req, res) => {
                 userId
             }
         })
-        res.status(201).json({
+        console.log(product)
+        return res.status(201).json({
             message: 'New product added!'
         })
     } catch (err) {
         console.log(err)
-        res.status(500).json({
+        return res.status(500).json({
             message: 'An error occured'
         })
     }

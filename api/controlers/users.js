@@ -51,17 +51,18 @@ const addUsers = async (req, res) => {
                 
             }
         })
-       // return res.status(200).json({addUsers})
+        return res.status(200).json({addUsers})
     } catch (err) {
         console.log(err)
-        //return res.status(500).json({err: 'add user'})
+        return res.status(500).json({err: 'add user'})
     }
 }
 
 const userLogin =  async (req, res, next) => {
-    console.log(req.body)
+    console.log({B: req.body})
+    // return res.json({})
     const { email, password } = req.body
-    const user = await prisma.user.findUnique({
+    try{const user = await prisma.user.findUnique({
         where: {
             email
         }
@@ -98,6 +99,11 @@ const userLogin =  async (req, res, next) => {
             res.status(401).json({
                 message:"Auth failedddd"
             })
+        })
+    }} catch (e) {
+        return res.status(419).json({
+            error: e, 
+            message: 'Some m'
         })
     }
 }
